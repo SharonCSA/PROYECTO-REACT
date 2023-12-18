@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "name": "Alhaja de diamantes",
+        "price": 250000,
+        "image": "cat1.jpg",
+        "category":"catalogo"
+    },
+    {
+        "id": 2,
+        "name": "Cadena con dije de Oro 18k",
+        "price": 200000,
+        "image": "cat2.jpg",
+        "category":"catalogo"
+    },
+    {
+        "id": 3,
+        "name": "Anillo para compromiso de Oro blanco y zircon",
+        "price": 130000,
+        "image": "cat3.jpg",
+        "category":"catalogo"
+    },
+    {
+        "id": 4,
+        "name": "Alianzas de Oro 18k, con franja de oro blanco",
+        "price": 105000,
+        "image": "cat4.jpg",
+        "category":"catalogo"
+    },
+    {
+        "id": 5,
+        "name": "Pulsera de Oro 18k.",
+        "price": 200000,
+        "image": "cat5.jpeg",
+        "category":"catalogo"
+    },
+    {
+        "id": 6,
+        "name": "Set de aritos de Oro 18k",
+        "price": 30000,
+        "image": "cat6.jpeg",
+        "category":"catalogo"
+    },
+    {
+        "id": 7,
+        "name": "Aros de plata 925 gris y dorada.",
+        "price": 15000,
+        "image": "des1.jpg",
+        "category":"descuento"
+    },
+    {
+        "id": 8,
+        "name": "Aros de plata 925 con piedras de zircon.",
+        "price": 20000,
+        "image": "des2.jpg",
+        "category":"descuento"
+    },
+    {
+        "id": 9,
+        "name": "Anillo de plata 925 modelo: ALCE.",
+        "price": 12000,
+        "image": "des3.jpg",
+        "category":"descuento"
+    },  
+    {
+        "id": 10,
+        "name": "Cadena de Oro 18k con dijes LOVE.",
+        "price": 180000,
+        "image": "des4.jpg",
+        "category":"descuento"
+    },
+    {
+        "id": 11,
+        "name": "Alianzas de plata.",
+        "price": 30000,
+        "image": "des5.jpg",
+        "category":"descuento"
+    },
+    {
+        "id": 12,
+        "name": "Set de cadena y anillo de Oro 18k con piedra de esmeralda.",
+        "price": 215000,
+        "image": "des6.jpg",
+        "category":"descuento"
+    }
+]    

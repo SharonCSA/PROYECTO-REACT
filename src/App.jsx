@@ -1,15 +1,28 @@
 import './App.css'
 import Navbar from './components/Navbar/Navbar';
-import ProductList from './components/ProductList/ProductList'
+import ItemListContainer from './components/ItemListContainer/ItemListContainer'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   const greetingMessage = "¡Hola! Echa un vistazo a nuestras joyas exclusivas.";
 
   return (
-    <>
-      <Navbar/>
-      <ProductList greeting={greetingMessage} />
-    </>
+
+    <BrowserRouter>
+
+    <Navbar/>
+
+    <Routes>
+      <Route path="/" element={<ItemListContainer greeting={greetingMessage} />}/>
+      <Route path="/productos/:categoryId" element={ <ItemListContainer /> } />
+
+
+      <Route path="*" element={ <Navigate to={"/"}/> }/>
+
+    </Routes>
+
+    </BrowserRouter>
+      
   )
 }
 
