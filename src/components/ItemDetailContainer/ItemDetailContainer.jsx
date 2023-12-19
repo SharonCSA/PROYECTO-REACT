@@ -34,6 +34,7 @@ const ItemDetailContainer = () => {
                 <p>Cargando...</p>
             ) : (
                 <section className="py-10">
+                    <h5>Acerca de...</h5>
                     <div className="container mx-auto flex items-center">
                         {/* Imagen */}
                         <div className="w-1/2 pr-8">
