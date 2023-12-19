@@ -6,11 +6,11 @@ const Navbar = () => {
     return (
         <header className='bg-orange-200'>
             <div className='container m-auto py-2 flex justify-between items-center'>
-                <Link to={"/"}><img className="w-28" src={hathor} alt="Logo"/></Link>
+                <Link to={"/productos"}><img className="w-28" src={hathor} alt="Logo"/></Link>
                 <nav className='flex gap-20'>
+                <Link className='className="text-white hover:bg-orange-700 hover:text-white hover:rounded text-lg uppercase font-semibold"' to={"/productos"}>Home</Link>    
                 <Link className='className="text-white hover:bg-orange-700 hover:text-white text-lg hover:rounded uppercase font-semibold"' to={"/productos/catalogo"}>Cátalogo</Link>
-                <Link className='className="text-white hover:bg-orange-700 hover:text-white text-lg hover:rounded uppercase font-semibold"' to={"/productos/ofertas"}>Ofertas</Link>
-                <Link className='className="text-white hover:bg-orange-700 hover:text-white hover:rounded text-lg uppercase font-semibold"' to={""}>Contacto</Link>
+                <Link className='className="text-white hover:bg-orange-700 hover:text-white text-lg hover:rounded uppercase font-semibold"' to={"/productos/descuento"}>Ofertas</Link>
                 </nav>
                 { <CartWidget /> }
             </div>
