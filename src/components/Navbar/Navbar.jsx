@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
-        <header className='bg-orange-200'>
+        <header  id='up' className='bg-orange-200'>
             <div className='container m-auto py-2 flex justify-between items-center'>
                 <Link to={"/productos"}><img className="w-28" src={hathor} alt="Logo"/></Link>
                 <nav className='flex gap-20'>
