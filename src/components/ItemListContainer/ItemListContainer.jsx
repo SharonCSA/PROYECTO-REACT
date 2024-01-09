@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { pedirDatos } from "../../utils/utils";
+import { useCart } from "../../context/CartContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ItemListContainer = () => {
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const { categoryId } = useParams();
+    const { addToCart, state } = useCart();
 
     useEffect(() => {
         setLoading(true);
@@ -19,10 +23,38 @@ const ItemListContainer = () => {
                 setProductos(items);
             })
             .finally(() => setLoading(false));
-    }, [categoryId]);
+    }, [categoryId, state.cartItems]);
+
+    const handleAddToCart = (product) => {
+        const productInCart = state.cartItems.find((item) => item.id === product.id);
+
+        if (productInCart) {
+            toast.warning('Este producto ya fue agregado anteriormente.', {
+                position: 'bottom-right',
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+            });
+        } else {
+            addToCart(product);
+
+            toast.success('Producto añadido correctamente', {
+                position: 'bottom-right',
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+            });
+        }
+    };
 
     return (
         <>
+            <ToastContainer />
+
             <section className="py-10">
                 <h4 className="text-3xl font-semibold mb-8">Hathor tu joyeria por excelencia</h4>
 
@@ -45,28 +77,26 @@ const ItemListContainer = () => {
                                         </div>
 
                                         <div className="flex items-center space-x-2">
-                                        <Link to={`/producto/${product.id}`}>
-                                        <button
-                                        type="button"
-                                        className="p-2 bg-red-500 text-white font-semibold rounded-md"
-                                        >
-                                        Ver
-                                        </button>
-                                        </Link>
+                                            <Link to={`/producto/${product.id}`}>
+                                                <button
+                                                    type="button"
+                                                    className="p-2 bg-red-500 text-white font-semibold rounded-md"
+                                                >
+                                                    Ver
+                                                </button>
+                                            </Link>
 
-                                        <button
-                                        type="button"
-                                        className="p-2 bg-gray-300 text-red-600 rounded-md"
-                                        onClick={() => {
-                                        // Sin funcionalidad por ahora
-                                        console.log("Añadir al Carrito", product.id);
-                                        }}
-                                        >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                                        <path fillRule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clipRule="evenodd" />
-                                        </svg>
-                                        </button>
-                                    </div>
+                                            <button
+                                                type="button"
+                                                className="p-2 bg-gray-300 text-red-600 rounded-md flex"
+                                                onClick={() => handleAddToCart(product)}
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                                                    <path fillRule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clipRule="evenodd" />
+                                                </svg>
+                                                Añadir
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -79,4 +109,5 @@ const ItemListContainer = () => {
 };
 
 export default ItemListContainer;
+
 

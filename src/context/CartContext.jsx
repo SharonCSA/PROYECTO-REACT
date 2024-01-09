@@ -1,3 +1,4 @@
+// CartContext.jsx
 import React, { createContext, useContext, useReducer } from "react";
 
 // Definir el estado inicial del carrito
@@ -6,7 +7,7 @@ const initialState = {
 };
 
 // Crear el contexto
-const CartContext = createContext();
+const CartContext = createContext(); // Crea el contexto del carrito
 
 // Definir tipos de acciones
 const ADD_TO_CART = "ADD_TO_CART";
@@ -23,13 +24,8 @@ const CartProvider = ({ children }) => {
         const existingProduct = state.cartItems.find(item => item.id === action.payload.id);
 
         if (existingProduct) {
-          // Si el producto ya está en el carrito, incrementar la cantidad
-          existingProduct.quantity += 1;
-
-          return {
-            ...state,
-            cartItems: [...state.cartItems],
-          };
+          // Si el producto ya está en el carrito, no hacer nada
+          return state;
         } else {
           // Agregar el nuevo producto al carrito con cantidad 1
           return {
@@ -91,3 +87,4 @@ const useCart = () => {
 };
 
 export { CartProvider, useCart };
+
