@@ -1,12 +1,11 @@
-// CartContext.jsx
 import React, { createContext, useContext, useReducer } from "react";
 
-// Definir el estado inicial del carrito
+// Estado inicial del carrito
 const initialState = {
   cartItems: [],
 };
 
-// Crear el contexto
+// Contexto
 const CartContext = createContext(); // Crea el contexto del carrito
 
 // Definir tipos de acciones
@@ -20,14 +19,19 @@ const CartProvider = ({ children }) => {
   const cartReducer = (state, action) => {
     switch (action.type) {
       case ADD_TO_CART:
-        // Verificar si el producto ya está en el carrito
-        const existingProduct = state.cartItems.find(item => item.id === action.payload.id);
+        const existingProductIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
 
-        if (existingProduct) {
-          // Si el producto ya está en el carrito, no hacer nada
-          return state;
+        if (existingProductIndex !== -1) {
+          // El producto ya está en el carrito, actualizar la cantidad
+          const updatedCart = [...state.cartItems];
+          updatedCart[existingProductIndex].quantity += 1;
+
+          return {
+            ...state,
+            cartItems: updatedCart,
+          };
         } else {
-          // Agregar el nuevo producto al carrito con cantidad 1
+          // Agg el nuevo producto al carrito con cantidad 1
           return {
             ...state,
             cartItems: [...state.cartItems, { ...action.payload, quantity: 1 }],
@@ -35,14 +39,13 @@ const CartProvider = ({ children }) => {
         }
 
       case REMOVE_FROM_CART:
-        // Eliminar el producto del carrito
         return {
           ...state,
-          cartItems: state.cartItems.filter((item) => item.id !== action.payload),
+          cartItems: state.cartItems.filter(item => item.id !== action.payload),
         };
 
       case CLEAR_CART:
-        // Limpiar el carrito
+
         return {
           ...state,
           cartItems: [],
@@ -77,7 +80,6 @@ const CartProvider = ({ children }) => {
   );
 };
 
-// Crear un gancho personalizado para acceder al contexto
 const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -87,4 +89,3 @@ const useCart = () => {
 };
 
 export { CartProvider, useCart };
-

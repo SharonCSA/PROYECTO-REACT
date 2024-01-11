@@ -1,36 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { pedirDatos } from "../../utils/utils";
 import { useParams, Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 const ItemDetailContainer = () => {
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
     const { productId } = useParams();
-    const { addToCart, state } = useCart();  // Agrega state de useCart
+    const { addToCart, state } = useCart();
     const [addedToCart, setAddedToCart] = useState(false);
 
     useEffect(() => {
         setLoading(true);
 
-        const fetchData = async () => {
-            try {
-                const data = await pedirDatos();
-                const selectedProduct = data.find((prod) => prod.id === parseInt(productId));
+        // 1.- Armar la referencia (sync)
+        const docRef = doc(db, 'productos', productId);
 
-                if (selectedProduct) {
-                    setProduct(selectedProduct);
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+        // 2.- Llamar a esa referencia (async)
+        getDoc(docRef)
+            .then((docSnapshot) => {
+                console.log(docSnapshot);
+                const doc = {
+                    ...docSnapshot.data(),
+                    id: docSnapshot.id
+                };
 
-        fetchData();
+                setProduct(doc);
+            })
+            .finally(() => setLoading(false));
+
     }, [productId]);
 
     const handleAddToCart = () => {
@@ -94,7 +95,7 @@ const ItemDetailContainer = () => {
                                         onClick={handleAddToCart}
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                                            <path fillRule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clipRule="evenodd" />
+                                            <path fillRule="evenodd" d="M7.5 6v.75H5.513c-.960 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clipRule="evenodd" />
                                         </svg>
                                         Añadir a la bolsa
                                     </button>
@@ -110,10 +111,3 @@ const ItemDetailContainer = () => {
 };
 
 export default ItemDetailContainer;
-
-
-
-
-
-
-

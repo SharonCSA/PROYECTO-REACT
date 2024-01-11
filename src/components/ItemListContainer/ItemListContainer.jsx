@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { pedirDatos } from "../../utils/utils";
 import { useCart } from "../../context/CartContext";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/config";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,15 +15,27 @@ const ItemListContainer = () => {
     useEffect(() => {
         setLoading(true);
 
-        pedirDatos()
-            .then((data) => {
-                const items = categoryId
-                    ? data.filter((prod) => prod.category === categoryId)
-                    : data;
+        // 1.- Armar una referencia (sync)
+        const productosRef = collection(db, 'productos');
+        const docsRef = categoryId
+            ? query(productosRef, where('category', '==', categoryId))
+            : productosRef;
 
-                setProductos(items);
+        // 2.- LLamar a esa referencia (async)
+        getDocs(docsRef)
+            .then((querySnapshot) => {
+                const docs = querySnapshot.docs.map(doc => {
+                    return {
+                        ...doc.data(),
+                        id: doc.id
+                    }
+                });
+
+                console.log(docs);
+                setProductos(docs);
             })
             .finally(() => setLoading(false));
+
     }, [categoryId, state.cartItems]);
 
     const handleAddToCart = (product) => {

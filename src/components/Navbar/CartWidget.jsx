@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCart } from '../../context/CartContext'; // Importa el contexto del carrito
+import { useCart } from '../../context/CartContext'; 
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
@@ -71,7 +71,8 @@ const CartWidget = () => {
             <ul className="grid grid-cols-1 gap-4 w-full text-center">
               {state.cartItems.map(item => (
                 <li key={item.id} className="border-b py-4 w-full flex items-center ">
-                  <img src={item.image} alt={item.name} className="w-16 h-16 mr-4 object-cover" />
+                  <img src={`/${item.image}`} alt={item.name} className="w-16 h-16 mr-4 object-cover" />
+
                   <div>
                     <span>{item.name}</span>
                     <div className="flex items-center">
