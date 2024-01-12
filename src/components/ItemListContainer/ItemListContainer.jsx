@@ -93,7 +93,7 @@ const ItemListContainer = () => {
                                             <Link to={`/producto/${product.id}`}>
                                                 <button
                                                     type="button"
-                                                    className="p-2 bg-red-500 text-white font-semibold rounded-md"
+                                                    className="p-2 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-400 "
                                                 >
                                                     Ver
                                                 </button>
@@ -101,7 +101,7 @@ const ItemListContainer = () => {
 
                                             <button
                                                 type="button"
-                                                className="p-2 bg-gray-300 text-red-600 rounded-md flex"
+                                                className="p-2 bg-gray-300 text-orange-700 rounded-md flex hover:text-orange-500"
                                                 onClick={() => handleAddToCart(product)}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
